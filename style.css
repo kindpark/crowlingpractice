@@ -1,0 +1,330 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #111111;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px; /* 가로 한 줄 카드가 보기 좋은 최적 너비 */
+  text-align: center;
+}
+
+h1 {
+  color: #ba0000; /* Last.fm 브랜드 컬러 */
+  margin-bottom: 20px;
+}
+
+button,
+.back-btn {
+  background-color: #ba0000;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover,
+.back-btn:hover {
+  background-color: #e60000;
+  transform: scale(1.05);
+}
+
+/* 💡 핵심 수정: Grid 대신 Flex Column으로 변경하여 1줄에 1개씩 세로 정렬 */
+#song-list,
+.song-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* ==========================================
+   공통 카드 스타일 (가로로 긴 한 줄 레이아웃)
+   ========================================== */
+.card {
+  display: flex;
+  align-items: center;
+  width: 100%; /* 한 줄 전체 차지 */
+  background-color: #1e1e1e;
+  padding: 16px 20px;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.card:hover {
+  background-color: #2a2a2a;
+  transform: translateY(-3px);
+}
+
+/* ==========================================
+   🏆 1~3등 전용 스타일 (가로 1줄 + 포인트 테두리)
+   ========================================== */
+.card.top-rank {
+  position: relative;
+  padding: 20px 24px;
+}
+
+/* 1등, 2등, 3등 테두리 포인트 */
+.card.rank-1 {
+  border: 2px solid #ffd700;
+}
+.card.rank-2 {
+  border: 2px solid #c0c0c0;
+}
+.card.rank-3 {
+  border: 2px solid #cd7f32;
+}
+
+/* 우측 상단 트로피 뱃지 */
+.rank-badge {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 15px;
+  color: #fff;
+}
+
+.rank-1 .rank-badge {
+  background-color: #ffd700;
+  color: #111;
+}
+.rank-2 .rank-badge {
+  background-color: #8a9ba8;
+}
+.rank-3 .rank-badge {
+  background-color: #cd7f32;
+}
+
+/* 1~3등 큰 이미지 */
+.top-card-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.top-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.top-artist {
+  color: #b3b3b3;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.top-listeners {
+  color: #777777;
+  font-size: 12px;
+}
+
+/* ==========================================
+   🎵 4등 이하 스타일 (1~3등과 동일한 폰트/구조, 뱃지만 제외)
+   ========================================== */
+.card.normal-rank {
+  padding: 16px 20px;
+}
+
+.card-img {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card .title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.card .artist {
+  color: #b3b3b3;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.card .listeners {
+  color: #777777;
+  font-size: 12px;
+}
+
+/* ==========================================
+   상세 페이지 전용 스타일
+   ========================================== */
+.detail-container {
+  max-width: 600px;
+  text-align: left;
+}
+
+.detail-card {
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.detail-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.detail-info {
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  line-height: 1.8;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  background-color: #333;
+  color: #d1d1d1;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.wiki-summary {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #cccccc;
+  line-height: 1.6;
+}
+
+.lastfm-link {
+  display: inline-block;
+  background-color: #ba0000;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+}
+/* 데탑*/
+@media (max-width: 1024px) {
+  .container {
+    max-width: 90%;
+  }
+  .card.top-rank {
+    padding: 18px 20px;
+  }
+  .top-card-img {
+    width: 70px;
+    height: 70px;
+  }
+  .top-title {
+    font-size: 16px;
+  }
+}
+/* 모바일 */
+@media (max-width: 720px) {
+  body {
+    padding: 20px 12px;
+  }
+  .container {
+    max-width: 100%;
+  }
+  .card.top-rank {
+    padding: 16px 14px;
+  }
+  .top-card-img {
+    width: 55px;
+    height: 55px;
+    margin-right: 12px;
+  }
+
+  .top-title {
+    font-size: 15px;
+  }
+
+  .top-artist,
+  .top-listeners {
+    font-size: 12px;
+  }
+
+  .rank-badge {
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+
+  /* 4등 이하 카드 */
+  .card.normal-rank {
+    padding: 12px 14px;
+  }
+
+  .card-img {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+  }
+
+  .card .title {
+    font-size: 14px;
+  }
+
+  .card .artist,
+  .card .listeners {
+    font-size: 12px;
+  }
+}
